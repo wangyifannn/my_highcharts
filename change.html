@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #142431;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+</body>
+<script src="../03/libs/js/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script>
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        },
+        colors: ['#d61718', '#50B432']
+    });
+
+    Highcharts.chart('container', {
+        chart: {
+            backgroundColor: "#0d0918", //画布背景色
+            // plotBorderColor: "46d6d7",
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function() {
+                    // set up the updating of the chart each second
+                    var series = this.series[0];
+                    setInterval(function() {
+                        var x = (new Date()).getTime(), // current time
+                            y = Math.random();
+                        series.addPoint([x, y], true, true);
+                    }, 1000);
+                }
+            }
+        },
+        title: {
+            text: '波形图',
+            style: {
+                color: '#0000ff' //设置文字颜色
+            }
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150,
+            lineColor: '#0000ff ',
+            gridLineColor: '#46d6d7',
+            lineWidth: 1,
+            tickColor: '#0000ff ', //刻度颜色
+            gridLineWidth: 1,
+
+        },
+        yAxis: {
+            title: {
+                text: 'Value'
+            },
+            gridLineWidth: 1,
+            lineColor: '#46d6d7 ',
+            gridLineColor: '#46d6d7',
+            tickWidth: 1,
+            gridLineWidth: 1,
+            tickColor: '#0000ff ', //刻度颜色
+        },
+        tooltip: {
+            formatter: function() {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: '波形data',
+            data: (function() {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: Math.random()
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+</script>
+
+</html>
