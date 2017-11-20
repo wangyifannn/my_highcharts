@@ -9,6 +9,10 @@
         body {
             background: #142431;
         }
+        
+        .highcharts-credits {
+            display: none;
+        }
     </style>
 
 </head>
@@ -25,12 +29,13 @@
         global: {
             useUTC: false
         },
-        colors: ['#d61718', '#50B432']
+        colors: ['#d61718', '#50B432'] //定义运动线条的颜色，第i条线使用数组中第i个值
     });
 
     Highcharts.chart('container', {
         chart: {
-            backgroundColor: "#0d0918", //画布背景色
+            backgroundColor: "#142431", //画布背景色
+            plotBackgroundColor: "#0d0918", //主图表区背景色，即X轴与Y轴围成的区域的背景色
             // plotBorderColor: "46d6d7",
             type: 'spline',
             animation: Highcharts.svg, // don't animate in old IE
@@ -61,18 +66,42 @@
             lineWidth: 1,
             tickColor: '#0000ff ', //刻度颜色
             gridLineWidth: 1,
-
+            tickWidth: 1, //坐标轴的宽度
+            labels: {
+                // formatter: function() {
+                //     return this.value
+                // },
+                style: {
+                    color: '#000', //刻度标识的文字颜色
+                    fontSize: '18px',
+                    fontFamily: '微软雅黑'
+                }
+            },
         },
         yAxis: {
             title: {
-                text: 'Value'
+                text: 'APP-R',
+                style: {
+                    color: "red"
+                }
             },
             gridLineWidth: 1,
-            lineColor: '#46d6d7 ',
-            gridLineColor: '#46d6d7',
-            tickWidth: 1,
-            gridLineWidth: 1,
+            lineColor: '#0000ff',
+            lineWidth: 1, //Y轴的宽度,设置y轴的坐标轴
+            gridLineColor: '#46d6d7', //网格横条线的颜色
+            tickWidth: 1, //设置y轴刻度先的宽，默认为0，不显示
+            gridLineWidth: 1, //坐标轴内的横线的宽
             tickColor: '#0000ff ', //刻度颜色
+            labels: {
+                // formatter: function() {
+                //     return this.value
+                // },
+                style: {
+                    color: '#000', //刻度标识的文字颜色
+                    fontSize: '18px',
+                    fontFamily: '微软雅黑'
+                }
+            },
         },
         tooltip: {
             formatter: function() {
@@ -97,7 +126,7 @@
 
                 for (i = -19; i <= 0; i += 1) {
                     data.push({
-                        x: time + i * 1000,
+                        x: time + i * 1000 + 1,
                         y: Math.random()
                     });
                 }
